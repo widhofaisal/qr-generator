@@ -42,7 +42,7 @@ if %errorlevel% equ 0 (
     echo ========================================
     echo.
     echo Access the application at:
-    echo http://localhost:3000
+    echo http://localhost:9090
     echo.
     echo To stop the application, run:
     echo docker-compose down
@@ -55,7 +55,7 @@ if %errorlevel% equ 0 (
     timeout /t 3 /nobreak >nul
     
     REM Try to open in browser
-    start http://localhost:3000
+    start http://localhost:9090
 ) else (
     echo.
     echo ERROR: Failed to start the application
