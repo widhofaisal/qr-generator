@@ -1,0 +1,38 @@
+services:
+  qrcode-generator:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: qrcode-generator
+    ports:
+      - "3000:80"
+    restart: unless-stopped
+    environment:
+      - NODE_ENV=production
+    networks:
+      - qrcode-network
+    labels:
+      - "com.qrcode.description=QR Code Generator Web Application"
+      - "com.qrcode.version=1.0.0"
+
+  # Optional: Development service with hot reload
+  qrcode-generator-dev:
+    image: node:18-alpine
+    container_name: qrcode-generator-dev
+    working_dir: /app
+    volumes:
+      - .:/app
+      - /app/node_modules
+    ports:
+      - "3001:3000"
+    command: sh -c "npm install && npm run dev -- --host 0.0.0.0"
+    environment:
+      - NODE_ENV=development
+    networks:
+      - qrcode-network
+    profiles:
+      - dev
+
+networks:
+  qrcode-network:
+    driver: bridge
